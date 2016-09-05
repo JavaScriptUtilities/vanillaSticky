@@ -14,9 +14,11 @@
     ],
     "license": "MIT",
     "ignore": [
+        "**/*.css",
         "**/.*",
         ".git",
         "bower.json",
+        "grunt/*",
         "index.html",
         "js/script.js",
         "LICENSE",
