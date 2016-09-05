@@ -1,6 +1,6 @@
 /*
  * Plugin Name: Vanilla-JS Sticky
- * Version: 0.1.0
+ * Version: 0.1.1
  * Plugin URL: https://github.com/Darklg/JavaScriptUtilities
  * JavaScriptUtilities Vanilla-JS may be freely distributed under the MIT license.
  */
@@ -15,10 +15,12 @@
 
 function vanilla_sticky_launch(elements) {
     'use strict';
+    /* Inject styles */
     var cssRules = '[data-sticky-top="1"] {position: fixed!important;top: 0!important;bottom: auto!important;}' + '[data-sticky-bottom="1"] {position: absolute!important;top: auto!important;bottom: 0!important;}',
         nodeCSS = document.createElement('style');
     nodeCSS.innerHTML = cssRules;
     document.body.appendChild(nodeCSS);
+    /* Call sticky for each element */
     for (var i = 0, len = elements.length; i < len; i++) {
         new vanilla_sticky(elements[i]);
     }
@@ -39,17 +41,29 @@ function vanilla_sticky(el) {
             return;
         }
         el.setAttribute('vanilla-sticky', '1');
+
+        set_elements();
+        set_events();
+    }
+
+    function set_elements() {
         el.style.position = 'absolute';
         el.style.top = 0;
         el.parentNode.style.position = 'relative';
+    }
 
+    function set_events() {
+        /* Initial check */
         update_positions(el);
         set_sticky_element(el);
+        /* When scrolling, set sticky status */
         window.addEventListener('scroll', function() {
             set_sticky_element(el);
         });
+        /* When page is loaded, update positions */
         window.addEventListener('load', function() {
             update_positions(el);
+            set_sticky_element(el);
         });
         /* When resizing, update positions */
         window.addEventListener('resize', function() {
@@ -58,11 +72,13 @@ function vanilla_sticky(el) {
         });
     }
 
+    /* Update element positions */
     function update_positions(el) {
         elPosition = getElementOffset(el);
         elParentPosition = getElementOffset(el.parentNode);
     }
 
+    /* Set sticky status on element */
     function set_sticky_element(el) {
         /* Scroll level */
         var startScroll = elParentPosition.top,
