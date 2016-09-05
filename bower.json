@@ -1,0 +1,25 @@
+{
+    "name": "vanillasticky",
+    "version": "0.1.0",
+    "homepage": "https://github.com/JavaScriptUtilities/vanillaSticky/",
+    "authors": [
+        "Darklg"
+    ],
+    "description": "Make an element sticky",
+    "main": [
+        "js/vanilla-sticky.js"
+    ],
+    "keywords": [
+        "js", "scroll", "sticky"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        ".git",
+        "bower.json",
+        "index.html",
+        "js/script.js",
+        "LICENSE",
+        "README.md"
+    ]
+}
