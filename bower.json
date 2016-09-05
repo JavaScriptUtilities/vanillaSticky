@@ -16,12 +16,14 @@
     "ignore": [
         "**/*.css",
         "**/.*",
-        ".git",
+        ".*",
         "bower.json",
         "grunt/*",
+        "Gruntfile.js",
         "index.html",
         "js/script.js",
         "LICENSE",
+        "package.json",
         "README.md"
     ]
 }
