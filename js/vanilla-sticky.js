@@ -1,6 +1,6 @@
 /*
  * Plugin Name: Vanilla-JS Sticky
- * Version: 0.2
+ * Version: 0.2.1
  * Plugin URL: https://github.com/Darklg/JavaScriptUtilities
  * JavaScriptUtilities Vanilla-JS may be freely distributed under the MIT license.
  */
