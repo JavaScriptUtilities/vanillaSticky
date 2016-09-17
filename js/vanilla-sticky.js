@@ -1,6 +1,6 @@
 /*
  * Plugin Name: Vanilla-JS Sticky
- * Version: 0.3.0
+ * Version: 0.3.1
  * Plugin URL: https://github.com/Darklg/JavaScriptUtilities
  * JavaScriptUtilities Vanilla-JS may be freely distributed under the MIT license.
  */
@@ -43,6 +43,8 @@ function vanilla_sticky_cssrules(opts) {
 }
 
 function vanilla_sticky(el, opts) {
+    /*jshint validthis: true */
+
     'use strict';
 
     opts = opts || {};
@@ -66,11 +68,11 @@ function vanilla_sticky(el, opts) {
         el.setAttribute('vanilla-sticky', '1');
 
         /* Setup */
-        set_elements();
-        set_events();
+        this.set_elements();
+        this.set_events();
     }
 
-    function set_elements() {
+    this.set_elements = function() {
         el.style.position = 'absolute';
         el.style.top = 0;
         elReference.style.position = 'relative';
@@ -79,27 +81,35 @@ function vanilla_sticky(el, opts) {
             el.parentNode.style.position = 'relative';
             el.parentNode.style.zIndex = zIndexParent;
         }
-    }
+    };
 
-    function set_events() {
+    this.set_events = function() {
         /* Initial check */
         update_positions();
         set_sticky_element();
 
         /* When scrolling, set sticky status */
-        window.addEventListener('scroll', set_sticky_element);
+        window.addEventListener('scroll', set_sticky_element, 1);
 
         /* When page is loaded, update positions */
-        window.addEventListener('load', update_and_sticky);
+        window.addEventListener('load', update_and_sticky, 1);
 
         /* When resizing, update positions */
-        window.addEventListener('resize', update_and_sticky);
-    }
+        window.addEventListener('resize', deb__update_and_sticky, 1);
+    };
+
+    this.unset_events = function() {
+        window.removeEventListener('scroll', set_sticky_element);
+        window.removeEventListener('load', update_and_sticky);
+        window.removeEventListener('resize', deb__update_and_sticky);
+    };
 
     function update_and_sticky() {
         update_positions();
         set_sticky_element();
     }
+
+    var deb__update_and_sticky = debounce(update_and_sticky, 250);
 
     /* Update element positions */
     function update_positions() {
@@ -150,6 +160,30 @@ function vanilla_sticky(el, opts) {
         }
 
     }
+
+    /* ----------------------------------------------------------
+      Utils
+    ---------------------------------------------------------- */
+
+    /* Debounce */
+    /* https://davidwalsh.name/javascript-debounce-function */
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+
+    /* Position */
 
     function getBodyScrollTop() {
         return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;

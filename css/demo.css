@@ -32,3 +32,17 @@
 .script-visible:focus {
     outline: 1px solid #ccc;
 }
+
+/* ----------------------------------------------------------
+  Blocks
+---------------------------------------------------------- */
+
+.sticky-element-default div,
+.sticky-element div {
+    padding: 20px;
+    background-color: #CCC;
+}
+
+.sticky-element div {
+    margin-left: 50px;
+}
