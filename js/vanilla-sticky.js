@@ -52,6 +52,7 @@ function vanilla_sticky(el, opts) {
     var elReference = opts.elReference || el.parentNode,
         useParentTop = opts.useParentTop || false,
         zIndexParent = opts.zIndexParent || 2,
+        self = this,
         elParentTop,
         elPosition,
         elParentPosition,
@@ -68,11 +69,11 @@ function vanilla_sticky(el, opts) {
         el.setAttribute('vanilla-sticky', '1');
 
         /* Setup */
-        this.set_elements();
-        this.set_events();
+        self.set_elements();
+        self.set_events();
     }
 
-    this.set_elements = function() {
+    self.set_elements = function() {
         el.style.position = 'absolute';
         el.style.top = 0;
         elReference.style.position = 'relative';
@@ -83,7 +84,7 @@ function vanilla_sticky(el, opts) {
         }
     };
 
-    this.set_events = function() {
+    self.set_events = function() {
         /* Initial check */
         update_positions();
         set_sticky_element();
@@ -98,7 +99,7 @@ function vanilla_sticky(el, opts) {
         window.addEventListener('resize', deb__update_and_sticky, 1);
     };
 
-    this.unset_events = function() {
+    self.unset_events = function() {
         window.removeEventListener('scroll', set_sticky_element);
         window.removeEventListener('load', update_and_sticky);
         window.removeEventListener('resize', deb__update_and_sticky);
