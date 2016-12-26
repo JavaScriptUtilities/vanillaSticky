@@ -1,6 +1,6 @@
 /*
  * Plugin Name: Vanilla-JS Sticky
- * Version: 0.3.1
+ * Version: 0.3.2
  * Plugin URL: https://github.com/Darklg/JavaScriptUtilities
  * JavaScriptUtilities Vanilla-JS may be freely distributed under the MIT license.
  */
@@ -61,12 +61,12 @@ function vanilla_sticky(el, opts) {
 
     function init() {
         /* Prevent double launch */
-        if (el.getAttribute('vanilla-sticky') == '1') {
+        if (el.getAttribute('data-vanilla-sticky') == '1') {
             update_positions();
             set_sticky_element();
             return;
         }
-        el.setAttribute('vanilla-sticky', '1');
+        el.setAttribute('data-vanilla-sticky', '1');
 
         /* Setup */
         self.set_elements();
