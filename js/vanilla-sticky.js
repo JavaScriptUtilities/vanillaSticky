@@ -1,6 +1,6 @@
 /*
  * Plugin Name: Vanilla-JS Sticky
- * Version: 0.3.2
+ * Version: 0.4.0
  * Plugin URL: https://github.com/Darklg/JavaScriptUtilities
  * JavaScriptUtilities Vanilla-JS may be freely distributed under the MIT license.
  */
@@ -51,6 +51,7 @@ function vanilla_sticky(el, opts) {
 
     var elReference = opts.elReference || el.parentNode,
         useParentTop = opts.useParentTop || false,
+        tryNativeSticky = opts.tryNativeSticky || false,
         zIndexParent = opts.zIndexParent || 2,
         self = this,
         elParentTop,
@@ -60,6 +61,15 @@ function vanilla_sticky(el, opts) {
         elStatus = -1;
 
     function init() {
+
+        /* Try to use sticky */
+        if (tryNativeSticky && positionStickySupported()) {
+
+            el.style.position = 'sticky';
+            el.style.top = 0;
+            return;
+        }
+
         /* Prevent double launch */
         if (el.getAttribute('data-vanilla-sticky') == '1') {
             update_positions();
@@ -195,6 +205,7 @@ function vanilla_sticky(el, opts) {
     }
 
     /* Element Offset */
+
     function getElementOffset(item) {
 
         var clientRect = item.getBoundingClientRect(),
@@ -214,6 +225,17 @@ function vanilla_sticky(el, opts) {
             height: height
         };
     }
+
+    /* Support */
+    /* http://trialstravails.blogspot.fr/2016/06/detecting-css-position-sticky-support.html */
+    function positionStickySupported() {
+        var el = document.createElement('a'),
+            mStyle = el.style;
+        mStyle.cssText = "position:sticky;position:-webkit-sticky;position:-ms-sticky;";
+        return mStyle.position.indexOf('sticky') !== -1;
+    }
+
+    /* Init */
 
     init();
 }
