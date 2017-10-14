@@ -37,12 +37,14 @@
   Blocks
 ---------------------------------------------------------- */
 
+.sticky-element-offset div,
 .sticky-element-default div,
 .sticky-element div {
     padding: 20px;
     background-color: #CCC;
 }
 
+.sticky-element-offset div,
 .sticky-element div {
     margin-left: 50px;
 }
